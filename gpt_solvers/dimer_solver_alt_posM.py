@@ -4,7 +4,7 @@ from multiprocessing import Pool, cpu_count
 import numpy as np
 from scipy.optimize import least_squares
 
-from dimer_funcs import self_cons_equations_numba
+from main_functions.dimer_funcs import self_cons_equations_numba
 
 
 # === преобразования переменных ===

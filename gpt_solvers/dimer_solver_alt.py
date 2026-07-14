@@ -4,7 +4,7 @@ from multiprocessing import Pool, cpu_count
 import numpy as np
 from scipy.optimize import least_squares
 
-from dimer_funcs import self_cons_equations_numba, up_limit_of_energy_of_state
+from main_functions.dimer_funcs import self_cons_equations_numba, up_limit_of_energy_of_state
 
 def nm_to_occ(sol_nm):
     """[N1,M1,N2,M2] -> [n1_up,n1_dn,n2_up,n2_dn], each ideally in [0,1]."""
