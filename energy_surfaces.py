@@ -8,7 +8,7 @@ x = -12                 # (E_0-E_f)/Г
 x_0 = -6                # E_0/Г
 x_f = x_0 - x           # E_f/Г
 y = 6.5                 # U/2Г
-z = 0.0                 # (g mu B)/2Г # должно быть отрицательным (g фактор)
+z = 0.0                 # (mu B)/Г
 w = 3                   # V/Г
 theta_1 = 0.0
 theta_2 = - theta_1
@@ -17,7 +17,7 @@ phi_2 = 0
 N_1 = 1.2
 N_2 = 1.2
 
-
+# === Решения, соответствующие M_i>=0, M_1==M_2 ===
 def dimer_canonical_energy_surface_posM_sym(N, x_0, y, z, w, theta_1, theta_2, phi_1, phi_2):
 
     N_1, N_2 = N, N
@@ -134,6 +134,7 @@ def dimer_grand_canonical_energy_surface_posM_sym(x_0, x_f, y, z, w, theta_1, th
     plt.show()
 
 
+# === Решения, соответствующие M_1==M_2 ===
 def dimer_grand_canonical_energy_surface_sym(x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2):
     
     # Расчет немагнитного решения, соответствующего началу отсчета энергии (немагнитное решение при z=0)
@@ -201,10 +202,3 @@ def dimer_grand_canonical_energy_surface_sym(x_0, x_f, y, z, w, theta_1, theta_2
 # dimer_canonical_energy_surface_grand_posM_sym(x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2)
 
 dimer_grand_canonical_energy_surface_sym(x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2)
-
-
-
-# sols = self_cons_bounded(
-#             x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2
-#         )
-# print(sols)
