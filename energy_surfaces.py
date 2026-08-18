@@ -245,9 +245,6 @@ def Q_squared_energy_surface(alpha, x_0, x_f, y, z, w, theta_1, theta_2, phi_1, 
         if (np.isclose(arr[0], arr[2], atol=1e-4) and np.isclose(arr[1], 0.0, atol=1e-4) and np.isclose(arr[3], 0.0, atol=1e-4)):
             sol_m0 = arr
             break
-
-    rho_x_f = rho_1(sol_m0, x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2)
-    print(-y*(y*rho_x_f+1))
     
     # Расчет начала отсчета энергии
     Energy_m0 = up_limit_of_energy_of_state(sol_m0, x_0, x_f, y, 0, w, theta_1, theta_2, phi_1, phi_2)
