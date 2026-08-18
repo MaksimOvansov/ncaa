@@ -312,6 +312,56 @@ def self_cons_equations_symmetric(N, M, x_0, x_f, y, z, w, theta_1, theta_2, phi
 # === Энергии ===
 
 
+def rho(solution, x_0, omega, y, z, w, theta_1, theta_2, phi_1, phi_2):   #dimensionless: \Gamma\rho(\omega)
+    N_1_ast = solution[0]
+    M_1_ast = solution[1]
+    N_2_ast = solution[2]
+    M_2_ast = solution[3]
+    
+    E, V = E_and_V(N_1_ast, M_1_ast, N_2_ast, M_2_ast, x_0, y, z, w, theta_1, theta_2, phi_1, phi_2)
+    
+    den_roots = find_roots_numpy(denominator_coeffs(E, V))
+    
+    A_pp_11 = partial_fractions_numba(num_G_pp_11, den_roots, E, V)
+    A_mm_11 = partial_fractions_numba(num_G_mm_11, den_roots, E, V)
+    A_pp_22 = partial_fractions_numba(num_G_pp_22, den_roots, E, V)
+    A_mm_22 = partial_fractions_numba(num_G_mm_22, den_roots, E, V)
+    
+    rho = 0.0 + 0.0j
+    for i in range(len(den_roots)):
+        rho += (1 / np.pi) * (A_pp_11[i] + A_mm_11[i]) / ((den_roots[i] - omega)**2 + 1) + (1 / np.pi) * (A_pp_22[i] + A_mm_22[i]) / ((den_roots[i] - omega)**2 + 1)
+    return rho
+
+
+def rho_full(solution, x_0, omega, y, z, w, theta_1, theta_2, phi_1, phi_2):   #dimensionless: \Gamma\rho_i^\alpha(\omega)
+    N_1_ast = solution[0]
+    M_1_ast = solution[1]
+    N_2_ast = solution[2]
+    M_2_ast = solution[3]
+    
+    E, V = E_and_V(N_1_ast, M_1_ast, N_2_ast, M_2_ast, x_0, y, z, w, theta_1, theta_2, phi_1, phi_2)
+    
+    den_roots = find_roots_numpy(denominator_coeffs(E, V))
+    
+    A_pp_11 = partial_fractions_numba(num_G_pp_11, den_roots, E, V)
+    A_mm_11 = partial_fractions_numba(num_G_mm_11, den_roots, E, V)
+    A_pp_22 = partial_fractions_numba(num_G_pp_22, den_roots, E, V)
+    A_mm_22 = partial_fractions_numba(num_G_mm_22, den_roots, E, V)
+
+    rho_p_1 = 0.0 + 0.0j
+    rho_m_1 = 0.0 + 0.0j
+    rho_p_2 = 0.0 + 0.0j
+    rho_m_2 = 0.0 + 0.0j
+    rho = 0.0 + 0.0j
+    for i in range(len(den_roots)):
+        rho_p_1 += (1 / np.pi) * A_pp_11[i] / ((den_roots[i] - omega)**2 + 1)
+        rho_m_1 += (1 / np.pi) * A_mm_11[i] / ((den_roots[i] - omega)**2 + 1)
+        rho_p_2 += (1 / np.pi) * A_pp_22[i] / ((den_roots[i] - omega)**2 + 1)
+        rho_m_2 += (1 / np.pi) * A_mm_22[i] / ((den_roots[i] - omega)**2 + 1)
+        rho += (1 / np.pi) * (A_pp_11[i] + A_mm_11[i]) / ((den_roots[i] - omega)**2 + 1) + (1 / np.pi) * (A_pp_22[i] + A_mm_22[i]) / ((den_roots[i] - omega)**2 + 1)
+    return rho_p_1, rho_m_1, rho_p_2, rho_m_2, rho
+
+
 def up_limit_of_energy_of_state(solution, x_0, x_f, y, z, w, theta_1, theta_2, phi_1, phi_2):
     N_1_ast = solution[0]
     M_1_ast = solution[1]
